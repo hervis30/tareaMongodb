@@ -1,0 +1,86 @@
+<%- include('partials/header'); -%>
+    <% if (!message) { var message="" ; } %>
+
+        <div class="container">
+
+            <%- include('index') %>
+
+                <div class="row">
+                    <!--FORM-->
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Registro de carros</h3>
+                                <form action="/addcar" method="post">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="platenumber"
+                                            placeholder="Ingresar placa de carro">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="brand" placeholder="marca">
+                                    </div>
+
+
+                                    <button class="btn btn-primary" type="submit">
+                                        Agregar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+
+                <!-- LIST  -->
+                <% if (message) { %>
+                    <div class="alert alert-danger">
+                        <%= message %>
+                    </div>
+                    <% }else { %>
+
+                        <div class="col-md-7">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>placa</th>
+                                        <th>marca</th>
+                                        <th>estado</th>
+                                        <th>editar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var i=0; i < cars.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <%= i + 1%>
+                                            </td>
+                                            <td><strong>
+                                                    <%= cars[i].platenumber %>
+                                                </strong></td>
+                                            <td>
+                                                <%= cars[i].brand %>
+                                            </td>
+                                            <td>
+                                                <%= cars[i].status %>
+                                            </td>
+                                            <td>
+                                                <a href="/editcar/<%= cars[i]._id %>" class="btn btn-info">
+                                                    Editar
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% } %>
+        </div>
+
+
+
+
+
+
+        <%- include('partials/footer') -%>

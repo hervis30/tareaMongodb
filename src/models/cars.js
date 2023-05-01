@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CarSchema = Schema({
-  platenumer: String,
+  platenumber: String,
   description: String,
-  brand:String,
+  brand: String,
   status: {
     type: Boolean,
-    default: false
+    default: true
   }
 });
 
-module.exports = mongoose.model('car', CarSchema);
+module.exports = mongoose.model('cars', CarSchema);

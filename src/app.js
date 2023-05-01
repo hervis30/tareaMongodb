@@ -1,7 +1,7 @@
 
 
 //El módulo path proporciona utilidades para trabajar con rutas de archivos y directorios
-const path=require('path')
+const path = require('path')
 //import path from 'path';
 const express = require('express');
 //import { Express } from 'express';
@@ -29,7 +29,7 @@ const app = express();
 
 // Conexión a la base de datos de MongoDB
 
-mongoose.connect('mongodb://127.0.0.1:27017/dbRentacar') 
+mongoose.connect('mongodb://127.0.0.1:27017/dbRentacar')
   .then(db => console.log('Database dbRentacar connected'))
   .catch(err => console.log(err));
 
@@ -45,7 +45,7 @@ app.set('views', path.join(__dirname, 'views'));
 /*
 Motor de plantillas ejs (otro es pug, por ejemplo)
 $ npm install ejs*/
-app.set('view engine', 'ejs'); 
+app.set('view engine', 'ejs');
 
 // middlewares: Modulos instalados para funciones que se ejecutan antes de ingresar a las rutas
 /*
@@ -61,6 +61,18 @@ app.use(morgan('dev'));
 app.use(express.urlencoded());// parsear a formato de json
 // routes
 app.use('/', indexRoutes);
+
+//agregando la carpeta public
+app.use(express.static('public'));
+
+//agregando flash para mostrar mensajes 
+const flash = require('connect-flash');
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.messages = req.flash();
+  next();
+});
 
 
 app.listen(app.get('port'), () => {

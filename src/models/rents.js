@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RentSchema = Schema({
-  rentnumber: String,
+  rentnumber: Number,
   username: String,
-  platenumber:String,
-  deadline:String,
+  platenumber: String,
+  rentdate: Date,
 });
 
-module.exports = mongoose.model('rent', RentSchema);
+module.exports = mongoose.model('rents', RentSchema);

@@ -1,0 +1,38 @@
+<%- include('partials/header'); -%>
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col bg-info d-flex justify-content-center fs-3 text cursor-pointer"
+                    onclick="redirectToUser()">
+                    Usuarios
+                </div>
+                <div class="col bg-success d-flex justify-content-center fs-3 text cursor-pointer"
+                    onclick="redirectToAutos()">
+                    Autos
+                </div>
+                <div class="col bg-warning d-flex justify-content-center fs-3 text cursor-pointer"
+                    onclick="redirectToRentas()">
+                    Rentas
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        let redirectToUser = () => {
+            window.location.href = '/user';
+        }
+
+        let redirectToAutos = () => {
+            window.location.href = '/car';
+        }
+
+        let redirectToRentas = () => {
+            window.location.href = '/rent';
+        }
+    </script>
+
+
+    <%- include('partials/footer') -%>
