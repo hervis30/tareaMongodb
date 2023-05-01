@@ -7,10 +7,13 @@
 
                 <div class="row">
                     <!--FORM-->
-                    <div class="col-md-5">
+                    <div class="col-md-5 mx-auto">
+                        <br>
+                        <h3>Registro de carros</h3>
+                        <br>
                         <div class="card">
                             <div class="card-body">
-                                <h3>Registro de carros</h3>
+
                                 <form action="/addcar" method="post">
                                     <div class="form-group">
                                         <input class="form-control" type="text" name="platenumber"
@@ -34,12 +37,15 @@
 
                 <!-- LIST  -->
                 <% if (message) { %>
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger text-center">
                         <%= message %>
                     </div>
                     <% }else { %>
 
-                        <div class="col-md-7">
+                        <div class="col-md-7 mx-auto">
+                            <br>
+                            <h3>Lista de autos</h3>
+                            <br>
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>

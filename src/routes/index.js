@@ -68,26 +68,35 @@ router.get('/rent', async (req, res) => {
 //agregar renta
 router.post('/addrent', async (req, res, next) => {
 
-  let rentnumber;
+  let rentMessage;
+  let userMessage;
+  let carMessage;
+  let carStatus;
+
   const existRent = await Rent.findOne({ rentnumber: req.body.rentnumber });
   const existCar = await Car.findOne({ platenumber: req.body.platenumber });
   const statusCar = await Car.findOne({ status: req.body.status });
   const existUser = await User.findOne({ username: req.body.username });
 
-  if (rentnumber) {
-    rentnumber = 'El numero de renta ya existe. Por favor, ingrese un numero de renta diferente';
-    res.render('indexrent', { rentnumber: rentnumber });
-  } else if (existUser) {
-    console.log('usuario existe');
+  if (existRent) {
+    rentMessage = 'El numero de renta ya existe. Por favor, ingrese un numero de renta diferente';
+    res.render('indexrent', { rentMessage: rentMessage });
+  } else if (!existUser) {
+    userMessage = 'El usuario no existe. Por favor, ingrese un usuario que se encuentre registrado';
+    res.render('indexrent', { userMessage: userMessage });
+  } else if (!existCar) {
+    carMessage = 'La matricula del carro no existe. Por favor, ingrese una matricula que se encuentre registrada';
+    res.render('indexrent', { carMessage: carMessage });
+  } else if (!statusCar) {
+    carStatus = 'El carro ya se encuentra rentado. Por favor selecciona otro carro';
+    res.render('indexrent', { carStatus: carStatus });
   } else {
+    await Car.updateOne({ platenumber: req.body.platenumber }, { $set: { status: false } });
+    const rent = new Rent(req.body);
+    await rent.save();
+    res.redirect('/rent');
 
   }
-
-
-
-  const rent = new Rent(req.body);
-  await rent.save();
-  res.redirect('/rent');
 });
 
 //Busca una renta por id en invoca la vista para cambiar la info de esta

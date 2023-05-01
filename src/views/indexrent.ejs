@@ -1,91 +1,116 @@
 <%- include('partials/header'); -%>
 
-    <div class="container">
+    <% if (!rentMessage) { var rentMessage="" ; } %>
+        <% if (!userMessage) { var userMessage="" ; } %>
+            <% if (!carMessage) { var carMessage="" ; } %>
+                <% if (!carStatus) { var carStatus="" ; } %>
 
-        <%- include('index') %>
+                    <div class="container">
 
-            <div class="row">
-                <!--FORM-->
-                <div class="col-md-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Renta de carros</h3>
-                            <form action="/addrent" method="post">
-                                <div class="form-group">
-                                    <input class="form-control" type="number" name="rentnumber"
-                                        placeholder="Ingresar numero de renta">
+                        <%- include('index') %>
+
+                            <div class="row">
+                                <!--FORM-->
+                                <br>
+                                <div class="col-md-5 mx-auto">
+                                    <br>
+                                    <h3>Registro de rentas</h3>
+                                    <br>
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <form action="/addrent" method="post">
+                                                <div class="form-group">
+                                                    <input class="form-control" type="number" name="rentnumber"
+                                                        placeholder="Ingresar numero de renta">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="username"
+                                                        placeholder="ingrese usuario">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input class="form-control" type="text" name="platenumber"
+                                                        placeholder="ingrese matricula del carro">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input class="form-control" type="date" name="rentdate"
+                                                        placeholder="seleccione fecha">
+                                                </div>
+
+
+                                                <button class="btn btn-primary" type="submit">
+                                                    Agregar
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="username"
-                                        placeholder="ingrese usuario">
+                            </div>
+                            <br>
+                            <!-- LIST  -->
+                            <% if (rentMessage) { %>
+                                <div class="alert alert-danger text-center">
+                                    <%= rentMessage %>
                                 </div>
-
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="platenumber"
-                                        placeholder="ingrese matricula del carro">
-                                </div>
-
-                                <div class="form-group">
-                                    <input class="form-control" type="date" name="rentdate"
-                                        placeholder="seleccione fecha">
-                                </div>
-
-
-                                <button class="btn btn-primary" type="submit">
-                                    Agregar
-                                </button>
-                            </form>
-                        </div>
+                                <% }else if(userMessage) { %>
+                                    <div class="alert alert-danger text-center">
+                                        <%= userMessage %>
+                                    </div>
+                                    <% }else if(carMessage) { %>
+                                        <div class="alert alert-danger text-center">
+                                            <%= carMessage %>
+                                        </div>
+                                        <% }else if(carStatus) { %>
+                                            <div class="alert alert-danger text-center">
+                                                <%= carStatus %>
+                                            </div>
+                                            <% }else { %>
+                                                <div class="col-md-7 mx-auto">
+                                                    <br>
+                                                    <h3>Listado de rentas</h3>
+                                                    <br>
+                                                    <table class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N°</th>
+                                                                <th>numero renta</th>
+                                                                <th>usuario</th>
+                                                                <th>matricula de carro</th>
+                                                                <th>fecha de renta</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% for(var i=0; i < rents.length; i++) { %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%= i + 1%>
+                                                                    </td>
+                                                                    <td><strong>
+                                                                            <%= rents[i].rentnumber %>
+                                                                        </strong></td>
+                                                                    <td>
+                                                                        <%= rents[i].username %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= rents[i].platenumber %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= rents[i].rentdate %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="/editrent/<%= rents[i]._id %>"
+                                                                            class="btn btn-info">
+                                                                            Editar
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <% } %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <% } %>
                     </div>
-                </div>
-            </div>
-            <br><br><br>
-
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>N°</th>
-                        <th>numero renta</th>
-                        <th>usuario</th>
-                        <th>matricula de carro</th>
-                        <th>fecha de renta</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(var i=0; i < rents.length; i++) { %>
-                        <tr>
-                            <td>
-                                <%= i + 1%>
-                            </td>
-                            <td><strong>
-                                    <%= rents[i].rentnumber %>
-                                </strong></td>
-                            <td>
-                                <%= rents[i].username %>
-                            </td>
-                            <td>
-                                <%= rents[i].platenumber %>
-                            </td>
-                            <td>
-                                <%= rents[i].rentdate %>
-                            </td>
-                            <td>
-                                <a href="/editrent/<%= rents[i]._id %>" class="btn btn-info">
-                                    Editar
-                                </a>
-                            </td>
-                        </tr>
-                        <% } %>
-                </tbody>
-            </table>
-
-
-    </div>
-
-
-
-
-
-
-    <%- include('partials/footer') -%>
+                    <%- include('partials/footer') -%>
