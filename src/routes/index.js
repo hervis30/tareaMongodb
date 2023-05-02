@@ -12,9 +12,26 @@ const User = require('../models/users');
 //inicio app
 router.get('/', async (req, res) => {
   //mostrar barra de navegacion
-  res.render('index');
-  console.log('barra de navegacion');
+  res.render('inicio');
+  console.log('inicio de sesion');
 });
+
+//inicio de sesion
+router.post('/iniciosesion', async (req, res, next) => {
+
+  const username = req.body.username;
+  const password = req.body.password;
+  const user = await User.findOne({ username: username, password: password });
+  let message;
+
+  if (!user) {
+    message = 'usuario o contraseña incorrectos. Por favor intentelo de nuevo';
+    res.render('inicio', { message: message });
+  } else {
+    res.redirect('/user');
+  }
+});
+
 
 
 //-----------------------------Inicio car--------------------------------------
@@ -25,6 +42,7 @@ router.get('/car', async (req, res) => {
     cars
   });
 });
+
 
 //agregar carro
 router.post('/addcar', async (req, res, next) => {
@@ -112,6 +130,8 @@ router.post('/editrent/:id', async (req, res, next) => {
   await Rent.updateOne({ _id: id }, req.body);
   res.redirect('/rent');
 });
+
+
 
 //------------------------Inicio user---------------------------------------------
 router.get('/user', async (req, res) => {

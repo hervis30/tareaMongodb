@@ -6,15 +6,26 @@
             <div class="col-md-5 offset-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <form action="/editrent/<%= car._id %>" method="post">
+                        <form action="/editrent/<%= rent._id %>" method="post">
                             <div class="form-group">
-                                <input class="form-control" type="text" name="platenumber"
-                                    placeholder="Agregue una placa" value="<%= car.platenumber %>">
+                                <input class="form-control" type="numer" name="rentnumber"
+                                    placeholder="Agregue un numero de renta" value="<%= rent.rentnumber %>">
                             </div>
 
                             <div class="form-group">
-                                <input class="form-control" type="text" name="brand" placeholder="Ingrese una marca"
-                                    value="<%= car.brand %>">
+                                <input class="form-control" type="text" name="username" placeholder="Ingrese un usuario"
+                                    value="<%= rent.username %>">
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="platenumber"
+                                    placeholder="Ingrese un numero de matricula de carro"
+                                    value="<%= rent.platenumber %>">
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control" type="date" name="rentdate"
+                                    placeholder="Ingrese una fecha de renta" value="<%= rent.rentdate %>">
                             </div>
 
                             <button class="btn btn-primary" type="submit">
