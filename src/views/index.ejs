@@ -1,5 +1,6 @@
 <%- include('partials/header'); -%>
     <div class="container">
+        <img src="img/car.jpg" alt="logo">
         <div class="container">
             <div class="row">
                 <div class="col bg-info d-flex justify-content-center fs-3 text cursor-pointer"
@@ -13,6 +14,10 @@
                 <div class="col bg-warning d-flex justify-content-center fs-3 text cursor-pointer"
                     onclick="redirectToRentas()">
                     Rentas
+                </div>
+                <div class="col bg-secondary d-flex justify-content-center fs-3 text cursor-pointer"
+                    onclick="redirectToSalir()">
+                    Salir
                 </div>
             </div>
         </div>
@@ -31,6 +36,10 @@
 
         let redirectToRentas = () => {
             window.location.href = '/rent';
+        }
+
+        let redirectToSalir=()=>{
+            window.location.href = '/';
         }
     </script>
 

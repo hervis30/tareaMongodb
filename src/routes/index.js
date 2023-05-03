@@ -91,9 +91,12 @@ router.post('/addrent', async (req, res, next) => {
   let carMessage;
   let carStatus;
 
+  
+
   const existRent = await Rent.findOne({ rentnumber: req.body.rentnumber });
   const existCar = await Car.findOne({ platenumber: req.body.platenumber });
-  const statusCar = await Car.findOne({ status: req.body.status });
+  const statusCar= await Car.findOne({ platenumber: req.body.platenumber }).exec();
+  const statusCarrito =statusCar ? statusCar.status : null;
   const existUser = await User.findOne({ username: req.body.username });
 
   if (existRent) {
@@ -105,10 +108,11 @@ router.post('/addrent', async (req, res, next) => {
   } else if (!existCar) {
     carMessage = 'La matricula del carro no existe. Por favor, ingrese una matricula que se encuentre registrada';
     res.render('indexrent', { carMessage: carMessage });
-  } else if (!statusCar) {
+  } else if (statusCarrito===false) {
     carStatus = 'El carro ya se encuentra rentado. Por favor selecciona otro carro';
     res.render('indexrent', { carStatus: carStatus });
   } else {
+    console.log('estado'+statusCarrito);
     await Car.updateOne({ platenumber: req.body.platenumber }, { $set: { status: false } });
     const rent = new Rent(req.body);
     await rent.save();
